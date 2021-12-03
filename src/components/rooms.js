@@ -16,16 +16,11 @@ function Rooms(props) {
         console.log("JSON Data rooms", jsonData);
 
         jsonData.map((e, i) => {
-          console.log("rooms id", e.homeId);
-          console.log("space id", props.selectedSpace.id);
-
           if (e.homeId === props.selectedSpace.id) {
             currentRooms.push(e);
           }
         });
         setRooms(currentRooms);
-
-        console.log("rooms filtrado", rooms);
       })
       .catch((error) => console.error(error));
   }, [props.selectedSpace]);
