@@ -27,9 +27,15 @@ function Spaces() {
     <div>
       <Container>
         <Row>
-          {spaces.map((e) => (
-            <Col>
-              <div className="card">
+          {spaces.map((e, i) => (
+            <Col key={i}>
+              <div
+                className="card"
+                onClick={() => {
+                  setSelectedSpace(e);
+                  console.log("selectedSpace", selectedSpace);
+                }}
+              >
                 <Image
                   className="card-img-top"
                   src={e.type === "house" ? house : apartment}
@@ -45,7 +51,7 @@ function Spaces() {
           ))}
         </Row>
       </Container>
-      <Rooms />
+      <Rooms selectedSpace={selectedSpace} />
     </div>
   );
 }
