@@ -28,7 +28,7 @@ function Spaces() {
       <Container>
         <Row>
           {spaces.map((e, i) => (
-            <Col key={i}>
+            <Col key={i} className="align-items-stretch">
               <div
                 className="card"
                 onClick={() => {
