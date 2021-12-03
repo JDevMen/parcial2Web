@@ -1,5 +1,22 @@
 import React, { useEffect, useState } from "react";
-import { Col, Container, Row } from "react-bootstrap";
+import { Card, Col, Container, Row } from "react-bootstrap";
+import bedroom from "../assets/rooms/bedroom.png";
+import dinnerRoom from "../assets/rooms/dinner.png";
+import kitchen from "../assets/rooms/kitchen.png";
+import livingRoom from "../assets/rooms/living-room.png";
+
+function getRoomImage(roomName) {
+  switch (roomName) {
+    case "Living room":
+      return livingRoom;
+    case "Kitchen":
+      return kitchen;
+    case "Dinner room":
+      return dinnerRoom;
+    default:
+      return bedroom;
+  }
+}
 
 function Rooms(props) {
   const [rooms, setRooms] = useState([]);
@@ -32,17 +49,13 @@ function Rooms(props) {
         <Row>
           {rooms.map((e) => (
             <Col>
-              <div className="card">
-                {/* <Image
-                  className="card-img-top"
-                  src={e.type === "house" ? house : apartment}
-                  alt="Card image cap"
-                  fluid
-                /> */}
-                <div className="card-body">
-                  <h5 className="card-title">{e.name}</h5>
-                </div>
-              </div>
+              <Card>
+                <Card.Title>{e.name}</Card.Title>
+                {/* <Card.Image
+                  variant="top"
+                  src="../assets/rooms/living-room.png"
+                ></Card.Image> */}
+              </Card>
             </Col>
           ))}
         </Row>

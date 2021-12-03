@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Col, Container, Image, Row } from "react-bootstrap";
+import { Card, Col, Container, Image, Row } from "react-bootstrap";
 import Rooms from "./rooms";
 import house from "../assets/house.png";
 import apartment from "../assets/apartment.png";
@@ -28,9 +28,9 @@ function Spaces() {
       <Container>
         <Row>
           {spaces.map((e, i) => (
-            <Col key={i} className="align-items-stretch">
-              <div
-                className="card"
+            <Col key={i} className="col-4 ">
+              <Card
+                style={{ width: "18rem" }}
                 onClick={() => {
                   setSelectedSpace(e);
                   console.log("selectedSpace", selectedSpace);
@@ -43,10 +43,10 @@ function Spaces() {
                   fluid
                 />
                 <div className="card-body">
-                  <h5 className="card-title">{e.name}</h5>
-                  <p className="card-text">{e.address}</p>
+                  <Card.Title>{e.name}</Card.Title>
+                  <Card.Text>{e.address}</Card.Text>
                 </div>
-              </div>
+              </Card>
             </Col>
           ))}
         </Row>
