@@ -51,7 +51,7 @@ function Spaces() {
           ))}
         </Row>
       </Container>
-      <Rooms selectedSpace={selectedSpace} />
+      {!isSelectedSpaceNull && <Rooms selectedSpace={selectedSpace} />}
     </div>
   );
 }

@@ -3,9 +3,10 @@ import { Col, Container, Row } from "react-bootstrap";
 
 function Rooms(props) {
   const [rooms, setRooms] = useState([]);
-
+  console.log("props space", props.selectedSpace);
   const urlSpaces =
     "https://gist.githubusercontent.com/josejbocanegra/92c90d5f2171739bd4a76d639f1271ea/raw/9effd124c825f7c2a7087d4a50fa4a91c5d34558/rooms.json";
+
   useEffect(() => {
     let currentRooms = [];
     console.log("props", props);
@@ -15,14 +16,19 @@ function Rooms(props) {
         console.log("JSON Data rooms", jsonData);
 
         jsonData.map((e, i) => {
-          if (e.homeId === props.id) currentRooms.push(e);
+          console.log("rooms id", e.homeId);
+          console.log("space id", props.selectedSpace.id);
+
+          if (e.homeId === props.selectedSpace.id) {
+            currentRooms.push(e);
+          }
         });
         setRooms(currentRooms);
 
         console.log("rooms filtrado", rooms);
       })
       .catch((error) => console.error(error));
-  }, []);
+  }, [props.selectedSpace]);
 
   return (
     <div>
