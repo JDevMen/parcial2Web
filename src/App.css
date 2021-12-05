@@ -28,15 +28,10 @@
   color: #61dafb;
 }
 
-.card {
-  margin-top: 1.5rem;
+.col-mb-2 {
+  display: flex;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.cardText {
+  vertical-align: bottom;
 }

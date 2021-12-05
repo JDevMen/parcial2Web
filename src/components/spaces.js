@@ -28,23 +28,20 @@ function Spaces() {
       <Container>
         <Row>
           {spaces.map((e, i) => (
-            <Col key={i} className="col-4 ">
+            <Col className="col-mb-2" key={i} md="2" fluid>
               <Card
-                style={{ width: "18rem" }}
                 onClick={() => {
                   setSelectedSpace(e);
                   console.log("selectedSpace", selectedSpace);
                 }}
               >
                 <Image
-                  className="card-img-top"
                   src={e.type === "house" ? house : apartment}
                   alt="Card image cap"
-                  fluid
                 />
                 <div className="card-body">
                   <Card.Title>{e.name}</Card.Title>
-                  <Card.Text>{e.address}</Card.Text>
+                  <Card.Text className="cardText">{e.address}</Card.Text>
                 </div>
               </Card>
             </Col>
