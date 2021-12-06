@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import axios from "axios";
 import { Card, Col, Container, Row, Image, Table } from "react-bootstrap";
 import { FormattedMessage } from "react-intl";
 import bedroom from "../assets/rooms/bedroom.png";
@@ -34,23 +35,9 @@ function getRoomName(roomName) {
   }
 }
 
-async function isOnline() {
-  var condition = navigator.onLine ? "online" : "offline";
-  if (condition === "online") {
-    fetch("https://www.google.com/", {
-      // Check for internet connectivity
-      mode: "no-cors",
-    })
-      .then(() => {
-        return true;
-      })
-      .catch(() => {
-        return false;
-      });
-  } else {
-    console.log("OFFLINE");
-    return false;
-  }
+function isObjectEmpty(obj) {
+  console.log("obj", obj);
+  return Object.keys(obj).length === 0;
 }
 
 function Rooms(props) {
@@ -60,11 +47,10 @@ function Rooms(props) {
   const urlSpaces =
     "https://gist.githubusercontent.com/josejbocanegra/92c90d5f2171739bd4a76d639f1271ea/raw/9effd124c825f7c2a7087d4a50fa4a91c5d34558/rooms.json";
 
-  let connected = isOnline();
   useEffect(() => {
     let currentRooms = [];
 
-    if (!connected) {
+    if (!navigator.onLine) {
       if (localStorage.getItem("rooms") === null) {
         setRooms([]);
       } else {
@@ -79,26 +65,44 @@ function Rooms(props) {
         setRooms(currentRooms);
       }
     } else {
-      fetch(urlSpaces)
-        .then((resp) => resp.json())
+      // fetch(urlSpaces)
+      //   .then((resp) => resp.json())
+      axios
+        .get(urlSpaces)
         .then((jsonData) => {
-          console.log("JSON Data rooms", jsonData);
-          localStorage.setItem("rooms", JSON.stringify(jsonData));
+          console.log("JSON Data rooms", jsonData.data);
+          localStorage.setItem("rooms", JSON.stringify(jsonData.data));
           // eslint-disable-next-line array-callback-return
-          jsonData.map((e) => {
+          jsonData.data.map((e) => {
             if (e.homeId === props.selectedSpace.id) {
               currentRooms.push(e);
             }
           });
           setRooms(currentRooms);
         })
-        .catch((error) => console.error(error));
+        .catch((error) => {
+          console.error(error);
+          if (localStorage.getItem("rooms") === null) {
+            setRooms([]);
+          } else {
+            let r = JSON.parse(localStorage.getItem("rooms"));
+            // eslint-disable-next-line array-callback-return
+            r.map((e) => {
+              if (e.homeId === props.selectedSpace.id) {
+                currentRooms.push(e);
+              }
+            });
+
+            setRooms(currentRooms);
+          }
+        });
     }
-  }, [connected, props, props.selectedSpace]);
+  }, [props, props.selectedSpace]);
 
   console.log("Rooms ", rooms);
 
-  const isSelectedRoomNull = selectedRoom === null;
+  const isSelectedRoomNull =
+    selectedRoom === null || isObjectEmpty(selectedRoom);
 
   return (
     <div>
