@@ -10,7 +10,6 @@ function Devices(props) {
 
   useEffect(() => {
     setId(props.id);
-    console.log("props device", device);
     setDevice(props.device);
   }, [props.id, props.device, device]);
 

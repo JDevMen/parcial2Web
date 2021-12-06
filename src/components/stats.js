@@ -3,11 +3,6 @@ import { FormattedMessage } from "react-intl";
 import * as d3 from "d3";
 
 function getBrowserLanguage() {
-  console.log("idioma", navigator.language || navigator.userLanguage);
-  console.log(
-    "tipo de idioma",
-    typeof navigator.language || navigator.userLanguage
-  );
   let idioma = navigator.language || navigator.userLanguage;
   if (idioma.startsWith("es")) {
     return "Uso de poder (KwH) - Hoy";
