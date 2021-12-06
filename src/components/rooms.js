@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Card, Col, Container, Row, Image, Table } from "react-bootstrap";
+import { FormattedMessage } from "react-intl";
 import bedroom from "../assets/rooms/bedroom.png";
 import dinnerRoom from "../assets/rooms/dinner.png";
 import kitchen from "../assets/rooms/kitchen.png";
@@ -16,6 +17,19 @@ function getRoomImage(roomName) {
       return dinnerRoom;
     default:
       return bedroom;
+  }
+}
+
+function getRoomName(roomName) {
+  switch (roomName) {
+    case "Living room":
+      return <FormattedMessage id="living" />;
+    case "Kitchen":
+      return <FormattedMessage id="kitchen" />;
+    case "Dinner room":
+      return <FormattedMessage id="dinner" />;
+    default:
+      return <FormattedMessage id="bedroom" />;
   }
 }
 
@@ -52,7 +66,12 @@ function Rooms(props) {
 
   return (
     <div>
-      <h2>My rooms</h2>
+      <h2
+        className="roomTitle"
+        style={{ textAlign: "left", marginLeft: "2rem" }}
+      >
+        <FormattedMessage id="rooms" />
+      </h2>
       <Container>
         <Row>
           <Col md="7">
@@ -65,7 +84,9 @@ function Rooms(props) {
                       console.log("selectedRoom ", selectedRoom);
                     }}
                   >
-                    <Card.Title className="roomTitle">{e.name}</Card.Title>
+                    <Card.Title className="roomTitle">
+                      {getRoomName(e.name)}
+                    </Card.Title>
                     <Image src={getRoomImage(e.name)} />
                   </Card>
                 </Col>
@@ -73,13 +94,17 @@ function Rooms(props) {
             </Row>
           </Col>
           <Col>
-            <Table striped bordered hover>
+            <Table striped bordered>
               <thead>
                 <tr>
                   <th>#</th>
                   <th>ID</th>
-                  <th>Device</th>
-                  <th>Value</th>
+                  <th>
+                    <FormattedMessage id="device" />
+                  </th>
+                  <th>
+                    <FormattedMessage id="value" />
+                  </th>
                 </tr>
               </thead>
               <tbody>
