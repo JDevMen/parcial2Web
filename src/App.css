@@ -35,3 +35,8 @@
 .cardText {
   vertical-align: bottom;
 }
+
+.roomTitle {
+  text-align: start;
+  margin: 0.2rem;
+}

@@ -28,7 +28,7 @@ function Spaces() {
       <Container>
         <Row>
           {spaces.map((e, i) => (
-            <Col className="col-mb-2" key={i} md="2" fluid>
+            <Col className="col-mb-2" key={`space ${i}`} md="2">
               <Card
                 onClick={() => {
                   setSelectedSpace(e);

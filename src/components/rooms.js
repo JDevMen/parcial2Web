@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { Card, Col, Container, Row } from "react-bootstrap";
+import { Card, Col, Container, Row, Image, Table } from "react-bootstrap";
 import bedroom from "../assets/rooms/bedroom.png";
 import dinnerRoom from "../assets/rooms/dinner.png";
 import kitchen from "../assets/rooms/kitchen.png";
 import livingRoom from "../assets/rooms/living-room.png";
+import Devices from "./devices";
 
 function getRoomImage(roomName) {
   switch (roomName) {
@@ -20,6 +21,8 @@ function getRoomImage(roomName) {
 
 function Rooms(props) {
   const [rooms, setRooms] = useState([]);
+  const [selectedRoom, setSelectedRoom] = useState(null);
+
   console.log("props space", props.selectedSpace);
   const urlSpaces =
     "https://gist.githubusercontent.com/josejbocanegra/92c90d5f2171739bd4a76d639f1271ea/raw/9effd124c825f7c2a7087d4a50fa4a91c5d34558/rooms.json";
@@ -32,6 +35,7 @@ function Rooms(props) {
       .then((jsonData) => {
         console.log("JSON Data rooms", jsonData);
 
+        // eslint-disable-next-line array-callback-return
         jsonData.map((e, i) => {
           if (e.homeId === props.selectedSpace.id) {
             currentRooms.push(e);
@@ -40,24 +44,56 @@ function Rooms(props) {
         setRooms(currentRooms);
       })
       .catch((error) => console.error(error));
-  }, [props.selectedSpace]);
+  }, [props, props.selectedSpace]);
+
+  console.log("Rooms ", rooms);
+
+  const isSelectedRoomNull = selectedRoom === null;
 
   return (
     <div>
       <h2>My rooms</h2>
       <Container>
         <Row>
-          {rooms.map((e) => (
-            <Col>
-              <Card>
-                <Card.Title>{e.name}</Card.Title>
-                {/* <Card.Image
-                  variant="top"
-                  src="../assets/rooms/living-room.png"
-                ></Card.Image> */}
-              </Card>
-            </Col>
-          ))}
+          <Col md="7">
+            <Row>
+              {rooms.map((e, i) => (
+                <Col md="4" key={`room ${i}`}>
+                  <Card
+                    onClickCapture={() => {
+                      setSelectedRoom(e);
+                      console.log("selectedRoom ", selectedRoom);
+                    }}
+                  >
+                    <Card.Title className="roomTitle">{e.name}</Card.Title>
+                    <Image src={getRoomImage(e.name)} />
+                  </Card>
+                </Col>
+              ))}
+            </Row>
+          </Col>
+          <Col>
+            <Table striped bordered hover>
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>ID</th>
+                  <th>Device</th>
+                  <th>Value</th>
+                </tr>
+              </thead>
+              <tbody>
+                {console.log(
+                  "devices ",
+                  selectedRoom !== null ? selectedRoom.devices : []
+                )}
+                {!isSelectedRoomNull &&
+                  selectedRoom.devices.map((e, i) => (
+                    <Devices id={i} device={e} />
+                  ))}
+              </tbody>
+            </Table>
+          </Col>
         </Row>
       </Container>
     </div>
