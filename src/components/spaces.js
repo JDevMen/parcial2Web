@@ -19,7 +19,7 @@ function Spaces() {
         setSpaces(jsonData);
       })
       .catch((error) => console.error(error));
-  }, []);
+  }, [url]);
 
   const isSelectedSpaceNull = selectedSpace === null;
 

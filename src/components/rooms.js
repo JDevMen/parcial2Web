@@ -6,6 +6,7 @@ import dinnerRoom from "../assets/rooms/dinner.png";
 import kitchen from "../assets/rooms/kitchen.png";
 import livingRoom from "../assets/rooms/living-room.png";
 import Devices from "./devices";
+import Stats from "./stats";
 
 function getRoomImage(roomName) {
   switch (roomName) {
@@ -121,6 +122,7 @@ function Rooms(props) {
           </Col>
         </Row>
       </Container>
+      <Stats rooms={rooms} />
     </div>
   );
 }
